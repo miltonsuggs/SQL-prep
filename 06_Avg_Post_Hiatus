@@ -1,0 +1,19 @@
+-- Source:     DataLemur "Average Post Hiatus" (Facebook)
+-- Link:       https://datalemur.com/questions/sql-average-post-hiatus-1
+-- Difficulty: Easy
+-- Pattern:    main pattern (and a second one, if any)
+-- Trick:      one line on what cracked it
+-- Gotcha:     edge case to watch (NULLs, ties, duplicates), if any
+-- Solved:     2026-10-17
+-- Re-solved cold: YYYY-MM-DD
+
+-- Approach (2–3 lines in plain English before writing SQL):
+--
+
+SELECT 
+  user_id
+  , MAX(post_date::DATE) - MIN(post_date::DATE) AS days_between_posts
+FROM posts
+WHERE DATE_PART('year',post_date::DATE) = 2021
+GROUP BY user_id
+HAVING COUNT(post_id) > 1;
