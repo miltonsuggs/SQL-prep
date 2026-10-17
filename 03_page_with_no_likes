@@ -1,0 +1,17 @@
+-- Source:     Page With no Lkes (Meta/Facebook)
+-- Link:       https://datalemur.com/questions/...
+-- Difficulty: Easy
+-- Pattern:    main pattern (and a second one, if any)
+-- Trick:      use a subquery in the where clause
+-- Gotcha:     
+-- Solved:     2026-10-16
+-- Re-solved cold: YYYY-MM-DD
+
+-- two tables: pages and page_likes, both containing a page_id column. the page_id column of page_likes table only contains pages that have at least one "like" from a user
+-- therefore any value from the page_id column of the "pages" table that is not in the "page_likes" table, have no likes. Use a subquery to filter that value.
+
+SELECT
+  P.page_id
+FROM pages P
+WHERE P.page_id NOT IN (SELECT PL.page_id FROM page_likes PL)
+ORDER BY P.page_id ASC
